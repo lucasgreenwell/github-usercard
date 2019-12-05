@@ -4,7 +4,8 @@
 */
 axios.get("https://api.github.com/users/lucasgreenwell")
   .then(response => {
-    console.log(response);
+    console.log(response)
+    makeCard(response);
   })
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
@@ -51,42 +52,45 @@ const followersArray = [];
 
 */
 
-// function makeCard (obj){
-//   //create elements
-//   const card = document.createElement('div');
-//   const img = document.createElement('img');
-//   const cardInfo = document.createElement('div');
-//   const name = document.createElement('h3');
-//   const username = document.createElement('p');
-//   const location = document.createElement('p');
-//   const profile = document.createElement('p');
-//   const link = document.createElement('a');
-//   const followers = document.createElement('p');
-//   const following = document.createElement('p');
-//   const bio = document.createElement('p');
+function makeCard (obj){
+  //create elements
+  const card = document.createElement('div');
+  const img = document.createElement('img');
+  const cardInfo = document.createElement('div');
+  const name = document.createElement('h3');
+  const username = document.createElement('p');
+  const location = document.createElement('p');
+  const profile = document.createElement('p');
+  const link = document.createElement('a');
+  const followers = document.createElement('p');
+  const following = document.createElement('p');
+  const bio = document.createElement('p');
+
+  //add classes
+  card.classList.add('card');
+  cardInfo.classList.add('card-info');
+  name.classList.add('name')
+  username.classList.add('username');
+
+  // set up structure
+  const cards = document.querySelector('.cards');
+  cards.append(card);
+  card.append(img, cardInfo);
+  cardInfo.append(name, username, location, profile, followers, following, bio);
+  profile.insertAdjacentElement('afterend', link);
+
+  // add info to elements
+  name.textContent = obj.data.name;
+  username.textContent = obj.data.login;
+  location.textContent = obj.data.location;
+  profile.textContent = "Profile: ";
+  followers.textContent = `Followers: ${obj.data.followers}`;
+  following.textContent = `Following: ${obj.data.followers}`;
+  bio.textContent = obj.data.bio;
+  img.setAttribute('src', obj.data.avatar_url)
+  link.setAttribute('href',obj.data.html_url)
+  link.textContent = obj.data.html_url;
 
 
-//   //add classes
-//   card.classList.add('card');
-//   cardInfo.classList.add('card-info');
-//   name.classList.add('name')
-//   username.classList.add('username');
-
-//   // set up structure
-//   const cards = document.querySelector('.cards');
-//   cards.append(card);
-//   card.append(img, cardInfo);
-//   cardInfo.append(name, username, location, profile, followers, following, bio);
-//   profile.append(link);
-
-//   //add info to elements
-//   // name.textContent = ;
-//   // username.textContent = ;
-//   // location.textContent = ;
-//   // profile.textContent = ;
-//   // followers.textContent = ;
-//   // following.textContent = ;
-//   // bio.textContent = ;
-//   // img.setAttribute.src = ;
-//   // link.setAttribute.href = ;
-// }
+  console.log(link);
+}
