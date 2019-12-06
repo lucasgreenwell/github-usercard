@@ -4,7 +4,19 @@
 */
 axios.get("https://api.github.com/users/lucasgreenwell")
   .then(response => {
-    console.log(response)
+    // console.log(response)
+    axios.get(response.data.followers_url)
+      .then(response => {
+        // console.log(response.data);
+        response.data.forEach(obj =>{
+          // console.log(obj);
+          axios.get(`https://api.github.com/users/${obj.login}`)
+            .then(response => {
+              console.log(response)
+              makeCard(response);
+            })
+        })
+      })
     makeCard(response);
   })
   // .get("https://api.github.com/users/lucasgreenwell/followers")
@@ -33,15 +45,15 @@ axios.get("https://api.github.com/users/lucasgreenwell")
           user, and adding that card to the DOM.
 */
 
-const followersArray = ["https://api.github.com/users/Godnoken", "https://api.github.com/users/alex-lc", "https://api.github.com/users/alexisdavalos", "https://github.com/anders529", "https://github.com/WindTalker22"];
+// const followersArray = ["https://api.github.com/users/Godnoken", "https://api.github.com/users/alex-lc", "https://api.github.com/users/alexisdavalos"];
 
-followersArray.forEach(ele => {
-  axios.get(ele)
-  .then(response => {
-    console.log(response)
-    makeCard(response);
-  })
-})
+// followersArray.forEach(ele => {
+//   axios.get(ele)
+//   .then(response => {
+//     // console.log(response)
+//     makeCard(response);
+//   })
+// })
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the 
@@ -102,5 +114,18 @@ function makeCard (obj){
   img.setAttribute('src', obj.data.avatar_url)
   link.setAttribute('href',obj.data.html_url)
   link.textContent = obj.data.html_url;
+
+
+  // for loop to Worker, had to alter component slightly, 
+  // name.textContent = obj.name;
+  // username.textContent = obj.login;
+  // location.textContent = obj.location;
+  // profile.textContent = "Profile: ";
+  // followers.textContent = `Followers: ${obj.followers}`;
+  // following.textContent = `Following: ${obj.followers}`;
+  // bio.textContent = obj.bio;
+  // img.setAttribute('src', obj.avatar_url)
+  // link.setAttribute('href',obj.html_url)
+  // link.textContent = obj.html_url;
 }
 
